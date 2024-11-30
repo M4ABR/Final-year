@@ -1,0 +1,349 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  /* background-color: #1e1e1e; */
+  background-color: #252525;
+  color: #e0e0e0;
+}
+
+#messageContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 850px;
+  flex-grow: 1;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #2a2a2a;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 10px;
+  }
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #333;
+  scroll-behavior: smooth;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: #333;
+  color: #e0e0e0;
+  word-wrap: break-word;
+}
+
+/* Styling for Markdown */
+.message.bot {
+  word-wrap: break-word;
+}
+
+/* Styling for tables */
+.message.bot table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  background-color: #2a2a2a;
+  table-layout: fixed;
+  overflow: hidden;
+}
+
+.message.bot table th,
+.message.bot table td {
+  padding: 8px;
+  border: 1px solid #555;
+  text-align: left;
+}
+
+.message.bot table td {
+  word-wrap: break-word;
+}
+
+.message.bot code {
+  background-color: #1e1e1e;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #f8f8f2;
+}
+
+.message.bot pre code {
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 4px;
+  color: #f8f8f2;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Markdown rendering section */
+.markdown {
+  word-wrap: break-word;
+  white-space: pre-wrap; /* To preserve line breaks */
+}
+
+#inputContainer {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  /* background-color: #1e1e1e; */
+  border-top: 1px solid #333;
+}
+
+#messageInput {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  margin-right: 10px;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+#messageInput:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+#plusSymbol {
+  order: -1;
+  cursor: pointer;
+  font-size: 24px;
+  color: #007bff;
+  padding: 3px 10px;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  margin-right: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#plusSymbol:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#submitButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+#submitButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+#submitButton:hover {
+  background-color: #0056b3;
+}
+
+#dropOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+#dropOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media (max-width: 600px) {
+  #messageContainer,
+  #inputContainer {
+    max-width: 100%;
+    padding: 5px;
+  }
+
+  #messageInput {
+    margin-right: 5px;
+  }
+
+  #plusSymbol,
+  #submitButton {
+    font-size: 20px;
+  }
+}
+
+/* General styling for markdown content */
+.message.bot .markdown-container {
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Styling for normal text in the markdown */
+.message.bot .markdown-container p {
+  margin-bottom: 10px;
+  color: #e0e0e0;
+}
+
+/* Styling for headers */
+.message.bot .markdown-container h1,
+.message.bot .markdown-container h2,
+.message.bot .markdown-container h3,
+.message.bot .markdown-container h4,
+.message.bot .markdown-container h5,
+.message.bot .markdown-container h6 {
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+/* Styling for inline code */
+.message.bot .markdown-container code {
+  background-color: #1e1e1e;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #f8f8f2;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9em;
+}
+
+.message.bot .markdown-container pre {
+  position: relative;
+  padding: 20px;
+  background-color: #2a2a2a;
+  color: #f8f8f2;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 10px 0px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Copy button inside the code block */
+.message.bot .markdown-container .copy-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect for the copy button */
+.message.bot .markdown-container .copy-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for successful copy feedback */
+.message.bot .markdown-container .copy-btn.success {
+  background-color: #28a745;
+}
+
+/* Styling for code blocks */
+.message.bot .markdown-container pre code {
+  display: inline-block;
+  line-height: 2rem;
+  box-shadow: 0 2px 4px rgba(62, 57, 57, 0.2);
+  background-color: #2a2a2a;
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-x: auto; /* Horizontal scroll if code overflows */
+  margin: 0;
+}
+
+/* Styling for tables */
+.message.bot .markdown-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  background-color: #2a2a2a;
+}
+
+.message.bot .markdown-container table th,
+.message.bot .markdown-container table td {
+  padding: 8px;
+  border: 1px solid #555;
+  text-align: left;
+}
+
+.message.bot .markdown-container table th {
+  background-color: #444;
+  color: #f8f8f2;
+}
+
+.message.bot .markdown-container table td {
+  color: #e0e0e0;
+}
+.message.bot .markdown-container h1,
+.message.bot .markdown-container h2,
+.message.bot .markdown-container h3,
+.message.bot .markdown-container h4,
+.message.bot .markdown-container h5,
+.message.bot .markdown-container h6 {
+  color: #e0e0e0;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.message.bot .markdown-container a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.message.bot .markdown-container table td,
+.message.bot .markdown-container table th {
+  word-wrap: break-word;
+}
+
+/* Wrapping the table in a container for horizontal scroll */
+.message.bot .markdown-container .table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
